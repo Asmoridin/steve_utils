@@ -4,9 +4,16 @@
 Function for sorting and filtering of collection data
 """
 
-def sort_and_filter(in_list:list, filter_index:int, verbose:bool=False, by_len = False):
+def sort_and_filter(in_list:list, filter_index:int, verbose:bool=False, by_len:bool = False, \
+        force_choice:str=""):
     """
     Function for sorting and filtering of collection data
+    inputs:
+    - in_list (required) - List of tuples with their current and max values
+    - filter_index (required) - The index in the tuple we are sorting/filtering on
+    - verbose - Print out the sort results
+    - by_len - if its a list, sort by list size, after filter - ie, a card only appears in one set
+    - force_choice - Overwrite the sorted choice with our own value.
     """
     if filter_index > len(in_list[0]):
         raise ValueError("Invalid index for list")
@@ -17,6 +24,7 @@ def sort_and_filter(in_list:list, filter_index:int, verbose:bool=False, by_len =
     if type(in_list[0][filter_index]) is list or type(in_list[0][filter_index]) is tuple:
         is_list = True
     sortable_map = {}
+
     for item in in_list:
         if is_list:
             for sub_item in item[filter_index]:
@@ -37,6 +45,8 @@ def sort_and_filter(in_list:list, filter_index:int, verbose:bool=False, by_len =
         print(item_sorter)
 
     returned_value = item_sorter[0][0]
+    if force_choice != "":
+        returned_value = force_choice
 
     # Now that we know what we're working with, we filter down to it
     ret_list = []
